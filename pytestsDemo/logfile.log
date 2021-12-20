@@ -1,0 +1,6 @@
+2020-07-09 21:05:42,376:WARNING:test_logging:Once the automation script finds a nagative value in bank account warning will be generated
+2020-07-09 21:05:42,376:ERROR:test_logging:A Major error has happened
+2020-07-09 21:05:42,376:CRITICAL:test_logging:Critical issue
+2020-07-09 21:08:50,337:WARNING:test_logging:Once the automation script finds a nagative value in bank account warning will be generated
+2020-07-09 21:08:50,337:ERROR:test_logging:A Major error has happened
+2020-07-09 21:08:50,337:CRITICAL:test_logging:Critical issue

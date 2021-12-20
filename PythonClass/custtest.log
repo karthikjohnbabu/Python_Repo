@@ -1,0 +1,5 @@
+03/01/2021 09:01:13 PM:CRITICAL:demologger:It is critical message
+03/01/2021 09:01:13 PM:ERROR:demologger:It is error message
+03/01/2021 09:01:13 PM:WARNING:demologger:It is warning message
+03/01/2021 09:01:13 PM:INFO:demologger:It is info message
+03/01/2021 09:01:13 PM:DEBUG:demologger:It is debug message

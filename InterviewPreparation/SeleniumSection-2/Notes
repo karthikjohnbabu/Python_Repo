@@ -1,0 +1,13 @@
+Web Driver Locators
+1.ID
+2.Name
+3.Xpath
+
+CSS selector syntax:
+tagname[attribute='value'] -- tagname optional
+Reg Ex: [attribute*='value']
+Example on console: $("input[name='name']")
+
+Xpath Selectors
+//tagname[@attribute=value]
+Reg Ex: [Contains(@attribute,'value')]

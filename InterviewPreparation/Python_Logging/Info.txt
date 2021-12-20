@@ -1,0 +1,9 @@
+LOGS
+
+Debug
+Info
+Warning
+Error
+Critical
+
+2019-02-17 12:40:14, 798 : Critical :<TestcaseName>: Fatal error in submitting credit card payment on step 4. cannot continue.

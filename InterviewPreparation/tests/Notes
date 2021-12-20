@@ -1,0 +1,339 @@
+Selenium Python Framework Implementation from Scratch.
+
+Standards of writing selenium tests in Pytest Framework.
+1.First create a Python package.
+2.Create a test file or test case as test_e2e.py
+3.Create a method as  def test_e2e(self).
+
+Creating Browser Invocation Fixtures in conftest.py
+***********************************************************************
+File-->conftest.py
+
+import pytest
+from selenium import webdriver
+
+
+@pytest.fixture(scope="class")
+def setup(request):
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--start-maximized")
+    driver = webdriver.Chrome(executable_path="C:\work\chromedriver.exe", options=chrome_options)
+    driver.get("https://rahulshettyacademy.com/angularpractice/")
+    request.cls.driver= driver
+    yield
+    driver.close()
+******************************************************************************
+File-->test_e2e.py
+
+@pytest.mark.usefixtures("setup")
+class TestOne:
+
+    def test_e2e(self):
+        self.driver.find_element_by_css_selector("a[href*='shop']").click()
+*************************************************************************
+
+Setting up Base class to hold all common utilities.
+
+Create a python package by name utilities and create a class by name base class
+
+import pytest
+@pytest.mark.usefixtures("setup")
+class BaseClass:
+    pass
+
+
+Inherting base class to all test to remove fixture redundant code.
+
+class TestOne(BaseClass):
+
+Notes:
+In the conftest.py file I have defined the fixture.
+
+This fixture name is setup--> which is responsible for the browser innovocation and launching the URL of the application.
+
+Code: conftest.py
+
+import pytest
+from selenium import webdriver
+
+@pytest.fixture(scope="class")
+def setup(request):
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--start-maximized")
+    driver = webdriver.Chrome(executable_path="C:\work\chromedriver.exe", options=chrome_options)
+    driver.get("https://rahulshettyacademy.com/angularpractice/")
+    request.cls.driver= driver
+    yield
+    driver.close()
+
+
+I have created a utility package and in that package I have created a base class.
+This base class has the fixture on it. So any class inheriting the base class, will have the access to fixture setup.
+
+import pytest
+@pytest.mark.usefixtures("setup")
+class BaseClass:
+    pass
+
+
+Passing command line options to select browser at run time.
+Syntax to select different browser at run time
+Py.test --browser_name chrome
+Py.test --browser_name firefox
+
+Here --browser_name acts as key
+And chrome and firefox acts as value.
+
+In conftest.py add the below add options method:
+
+def pytest_addoption(parser):
+    parser.addoption(
+        "--browser_name" , action="store", default="chrome"
+    )
+
+@pytest.fixture(scope="class")
+def setup(request):
+    browser_name=request.config.getoption("browser_name")
+    if browser_name =="chrome":
+        driver = webdriver.Chrome(executable_path="C:\work\chromedriver.exe")
+    elif browser_name=="firefox":
+        driver = webdriver.Firefox(executable_path="C:\work\geckodriver.exe")
+    driver.get("https://rahulshettyacademy.com/angularpractice/")
+    driver.maximize_window()
+
+
+Implementing page object mechanism
+In a application if we have 3 pages, then for 3 pages --> 3 classes are defined.
+Create a python package PageObjects.
+In the PageObjects package create 3 below class or 3 python files as below.
+HomePage.py
+CheckoutPage.py
+ConfirmPage.py
+
+I am writing the below line in Page object model.
+driver.find_element_by_css_selector("a[href*='shop']").click()
+
+In HomePage.py
+create a vairable as below:
+shop=(By.CSS_SELECTOR,"a[href*='shop']")
+Here shop is a variable which is holding the data in tuple format.
+Where this variable-shop uses two arguments.
+1st Argument --> CSS_SELECTOR
+2nd Argument --> a[href*='shop']
+
+In the same HomePage.py
+I am developing a method as below.
+
+    def shopItems(self):
+      return self.driver.find_element(*HomePage.shop)
+
+Note: (*HomePage.shop) will be deserialized by python and it will be interrupted as below.
+driver.find_element_by_css_selector("a[href*='shop']")
+
+In the actual Testcase file--> test_e2e.py
+The below code is written.
+ def test_e2e(self):
+        homePage=HomePage(self.driver)
+        homePage.shopItems().click()
+
+Explaination:
+I am create a object for HomePage class. And to the object I am passing the webDriver as an argument.
+Since the webDriver is passed as the argument. This webdriver will be initialized by the constructor at the HomePage.
+Where in the webDriver is passed to HomePage as self.driver.
+
+Smarter way of returning page objects from Navigation methods
+In a application if we have 5 pages, then we are likely to create 5 classes for 5 pages and for each class we need to create 5
+objects. This is not a optimized way
+
+Rather we find the common or integration point between 2 pages. In this example shop button is the integrating point between
+Page 1 and Page 2.
+Page 1 --> HomePage
+Page 2--> CheckOutPage
+
+The integrating point between them is shop button. So when we access the shop button. We are create a object for the CheckoutPage.
+
+Example:
+ def shopItems(self):
+        self.driver.find_element(*HomePage.shop).click()
+        checkOutPage = CheckOutPage(self.driver)
+        return checkOutPage
+
+So the above method is returning the checkOutPage object--> That object we are capturing at
+test_e2e.py.
+
+     homePage=HomePage(self.driver)
+     checkOutPage =homePage.shopItems()
+
+
+Creating selenium WebDriver Custom Utilities in Base class
+Base class acts as a utility, where Utility means a common area for all.
+In the base class we are adding the Explicit wait statements as method.
+
+Example:
+class BaseClass:
+    def verifyLinkPresence(self, text):
+        wait = WebDriverWait(self.driver, 7)
+        wait.until(expected_conditions.presence_of_element_located((By.LINK_TEXT, text)))
+
+This verifyLinkPresence method can be called from the test_case file and to this method we need to pass the text.
+Example:
+self.verifyLinkPresence("India")
+
+
+Paramterizing webdriver tests with Multiple data sets
+
+Note:
+For Data we have seperate Python Package called TestData.
+For Test cases we have seperate Python Package called tests
+For Page Objects we have a seperate Package.
+For Utilities and for re-usable methods we have seperate package.
+
+Organizing Data from Seperate data files and injecting into fixture at run time.
+
+At the test case file add the fixture below to inject data at run time.
+
+    class TestHomePage(BaseClass):
+
+    def test_formSubmission(self,GetData):
+
+        # driver.find_element_by_name("name").send_keys("Karthik")
+        homepage =HomePage(self.driver)
+        homepage.getName().send_keys(GetData["firstname"])
+        homepage.getEmail().send_keys(GetData["lastname"])
+        homepage.getCheckBox().click()
+        self.selectOptionByText(homepage.getGender(),GetData["gender"])
+        homepage.getSubmit().click()
+
+    @pytest.fixture(params=HomePageData.test_HomePageData)
+    def GetData(self, request):
+        return request.param
+
+At TestData Package,
+add the below code.
+
+class HomePageData:
+
+    test_HomePageData=[{"firstname":"Karthik","lastname":"Babu","gender":"Male"},{"firstname":"Roshini","lastname":"John","gender":"Female"}]
+
+
+Implementing Logging feature to webdriver tests
+
+Implement the below code at the BaseClass.
+    def getLogger(self):
+        loggerName = inspect.stack()[1][3]
+        logger = logging.getLogger(loggerName)
+        fileHandler = logging.FileHandler('logfile.log')
+        formatter = logging.Formatter("%(asctime)s :%(levelname)s : %(name)s :%(message)s")
+        fileHandler.setFormatter(formatter)
+
+        logger.addHandler(fileHandler)  # filehandler object
+
+        logger.setLevel(logging.DEBUG)
+        return logger
+Now at the test case test_e2e and Test_HomePage implement the below code.
+class TestOne(BaseClass):
+
+    def test_e2e(self):
+        log =self.getLogger()
+        homePage=HomePage(self.driver)
+        checkOutPage =homePage.shopItems()
+        log.info("Getting all the Card Titles")
+        cards = checkOutPage.getCardTitles()
+        i=-1
+        for card in cards:
+
+
+Text Execution HTML reporting
+py.test --html=report.html
+
+Automatic Screen shot Capture on Test Failures
+
+Integrating Selenium Python Framework to jenkins CI tool with Jenin Build Parameterization
+
+GitHub Basics
+
+Operations to read and write the data from Excel
+
+import openpyxl
+book= openpyxl.load_workbook("C:\\Users\\karth\\OneDrive\\Documents\\PythonDemo.xlsx")
+sheet=book.active
+cell= sheet.cell(row=1,column=2)
+#print(cell.value)
+sheet.cell(row=2,column=2).value="Karthik"
+#print(sheet.cell(row=2,column=2).value)
+#print(sheet.max_row)
+#print(sheet.max_column)
+#print(sheet['A5'].value)
+for i in range(1, sheet.max_row+1):
+    for j in range(1, sheet.max_column+1):
+        print(sheet.cell(row=i, column=j).value)
+
+
+How to drive the data from Excel to the selenium Framework.
+
+Create a Python Package TestData. And a class by name: HomePageData.py
+
+Write the below code.
+import openpyxl
+
+
+class HomePageData:
+
+    test_HomePageData=[{"firstname":"Karthik","lastname":"Babu","gender":"Male"},{"firstname":"Roshini","lastname":"John","gender":"Female"}]
+
+    @staticmethod
+    def getTestData(test_case_name):
+        Dict={}
+        book = openpyxl.load_workbook("C:\\Users\\karth\\OneDrive\\Documents\\PythonDemo.xlsx")
+        sheet = book.active
+        for i in range(1, sheet.max_row + 1):  # To get rows
+            if sheet.cell(row=i, column=1).value == test_case_name:
+                for j in range(2, sheet.max_column + 1):  # To Get columns
+                    Dict[sheet.cell(row=1, column=j).value] = sheet.cell(row=i, column=j).value
+        return[Dict]
+
+In the test case --test_HomePage.py: add the below data.
+
+    @pytest.fixture(params=HomePageData.getTestData("TestCase2"))
+    def GetData(self, request):
+        return request.param
+
+Revision for Python Selenium.
+Create the Python package as below.
+
+1.Tests--> which holds the test-cases for automation .
+
+    1.1-->conftest.py--> Which has the setup and tear down methods.
+    This conftest.py file is responsible for browser innocation and selenium webdriver initialization.
+
+    1.2-->test_e2e.py and test_HomePage.py are the test cases
+
+    1.3-->logfile.log is the file which holds all the logs for the test case run.
+
+    1.4-->report.html is the file which contains the report of our recent test run.
+
+2.Utilities--> which holds the base class for automation.
+
+    2.1--> BaseClass.py consist of utilities like getLogger and Explicit Wait
+
+3.TestData --> which holds the Test data for automation.
+
+    3.1-->HomePageData.py consists of getTestData() a static method to drive the data from the excel.
+
+4.PageObjects--> Which contains class for each page in application.
+
+    3.1-->HomePage.py
+    3.2-->ConfirmPage.py
+    3.3-->CheckoutPage.py
+
+5.Reports --> which contains reports for the test case run.
+
+
+
+
+
+
+
+
+
+

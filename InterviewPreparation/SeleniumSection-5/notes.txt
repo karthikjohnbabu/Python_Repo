@@ -1,0 +1,3 @@
+Validate whether products selected in page 1 are showing in page 2 (Check Page)
+Verify if Price Decreases on Discount
+Verify if sum of products in checkout page matches with total amount.

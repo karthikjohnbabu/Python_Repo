@@ -1,0 +1,12 @@
+2021-09-03 18:40:53,668 :INFO :test_logging : Information statement
+2021-09-03 18:40:53,668 :WARNING :test_logging :Something is in warning Mode
+2021-09-03 18:40:53,668 :ERROR :test_logging :A major error has occured
+2021-09-03 18:40:53,668 :CRITICAL :test_logging : Critical issue
+2021-09-03 21:52:56,967 :INFO :Python_Logging.BaseClass :Karthik
+2021-09-03 21:52:56,967 :INFO :Python_Logging.BaseClass :karthikjohnbabu@gmail.com
+2021-09-03 21:57:56,784 :INFO :Python_Logging.BaseClass :Karthik
+2021-09-03 21:57:56,784 :INFO :Python_Logging.BaseClass :karthikjohnbabu@gmail.com
+2021-09-03 22:02:27,727 :INFO :test_editProfile :Karthik
+2021-09-03 22:02:27,727 :INFO :test_editProfile :karthikjohnbabu@gmail.com
+2021-09-03 22:12:29,404 :INFO :test_editProfile :Karthik
+2021-09-03 22:12:29,404 :INFO :test_editProfile :karthikjohnbabu@gmail.com

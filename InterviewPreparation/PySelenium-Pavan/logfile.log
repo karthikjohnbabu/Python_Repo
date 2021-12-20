@@ -1,0 +1,5 @@
+2021-09-06 15:08:09,298: DEBUG:  __main__ : A debug statement is executed
+2021-09-06 15:08:09,298: INFO:  __main__ : Information statement
+2021-09-06 15:08:09,298: WARNING:  __main__ :  Something is in warning mode
+2021-09-06 15:08:09,298: ERROR:  __main__ :  A major error is happened
+2021-09-06 15:08:09,298: CRITICAL:  __main__ : Critical issue

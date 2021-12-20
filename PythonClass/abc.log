@@ -1,0 +1,4 @@
+03/01/2021 09:06:23 PM:CRITICAL:demo logger:It is critical message
+03/01/2021 09:06:23 PM:ERROR:demo logger:It is error message
+03/01/2021 09:06:23 PM:WARNING:demo logger:It is warning message
+03/01/2021 09:06:23 PM:INFO:demo logger:It is info message

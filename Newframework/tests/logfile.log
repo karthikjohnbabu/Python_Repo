@@ -1,0 +1,23 @@
+2020-07-18 16:26:46,958 :INFO : test_e2e :Getting all the card titles
+2020-07-18 16:26:47,360 :INFO : test_e2e :Entering country name as india
+2020-07-18 16:26:53,165 :INFO : test_e2e :Text received from application is×
+Success! Thank you! Your order will be delivered in next few weeks :-).
+2020-07-18 16:31:49,097 :INFO : test_formSubmission :First Name iskarthik
+2020-07-18 16:31:50,244 :INFO : test_formSubmission :First Name isRoshini
+2020-07-18 16:31:50,244 :INFO : test_formSubmission :First Name isRoshini
+2020-07-18 16:36:23,393 :INFO : test_formSubmission :First Name iskarthik
+2020-07-18 16:36:24,685 :INFO : test_formSubmission :First Name isRoshini
+2020-07-18 16:36:24,685 :INFO : test_formSubmission :First Name isRoshini
+2020-07-18 16:36:34,235 :INFO : test_e2e :Getting all the card titles
+2020-07-18 16:36:34,765 :INFO : test_e2e :Entering country name as india
+2020-07-18 16:36:40,464 :INFO : test_e2e :Text received from application is×
+Success! Thank you! Your order will be delivered in next few weeks :-).
+2020-07-18 16:52:11,056 :INFO : test_formSubmission :First Name iskarthik
+2020-07-18 16:52:12,268 :INFO : test_formSubmission :First Name isRoshini
+2020-07-18 16:52:12,268 :INFO : test_formSubmission :First Name isRoshini
+2020-07-18 16:52:21,685 :INFO : test_e2e :Getting all the card titles
+2020-07-18 16:52:22,289 :INFO : test_e2e :Entering country name as india
+2020-07-18 16:52:28,177 :INFO : test_e2e :Text received from application is×
+Success! Thank you! Your order will be delivered in next few weeks :-).
+2020-07-19 16:35:31,089 :INFO : test_formSubmission :First Name iskarthik 
+2020-07-19 16:36:07,223 :INFO : test_formSubmission :First Name isRaju

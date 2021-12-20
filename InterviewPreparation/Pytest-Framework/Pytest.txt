@@ -1,0 +1,148 @@
+Pytest Testing Framework.
+
+Install Pytest-
+pip install pytest
+
+Naming conventions to follow for Pytest Tests
+# Any pytest file should start with test_ or end with _test
+# Pytest method names should start with test
+# all the code should be wrapped inside a method.
+
+Running Pytests from command line and Pycharm
+At command prompt cd: path of the Pytest folder.
+py.test -v -s
+-s stands for logs in output
+-v stands for more info metadata
+
+
+Note: In pytest every method is treated as testcase.
+We cannot we have two methods with same name in pytest. If it is present, then one method will overide the other method.
+It is good to have unique name for each method in pytest.
+
+Running Selected test files using pytest
+py.test file_name.py -v -s
+py.test test_demo2.py -v -s
+
+
+Running Selected Test methods based on matching keywords
+py.test -k --> Stands for Regular Expression followed by the keywords
+py.test -k CreditCard -v -s
+
+Pytest tags mechanism to run tests based on functionality.
+add the marks to the pytest method as below.
+@pytest.mark.smoke
+py.test -m smoke -v -s
+
+Failing and skipping tests with Annotations using pytest
+add the marks to the pytest method as below.
+@pytest.mark.skip
+
+@pytest.mark.xfail
+The xfail will run the testcase but it will not report on the reports
+
+
+What are fixtures and importance of their Hooks in pytest
+Pytest fixtures are functions attached to the tests which run before the test function is executed.
+fixtures are used as setup and tear down methods for test cases.
+Example:
+import pytest
+
+
+@pytest.fixture()
+def setup():
+    print("I will be executed first") # used to invoke the browser, before test case execution necessary setup
+    yield
+    print(" I will be executed at last") # used to clean up the session, post running the test case
+
+def test_fixtureDemo(setup):
+    print("I will Executed steps in fixtureDemo Method")
+
+
+How fixtures can be configured in conftest file for better readability
+For example if I need a fixture to all the test files. Then i can write in a seperate file named conftest
+Only when a particular fixture is shared by multiple test files then we can place it under conftest file
+
+different scopes of fixtures and their related annotation to setup pre and post conditions of the test
+Fixtures scope for methods.
+import pytest
+@pytest.fixture()
+def setup():
+    print("I will be executed first") # used to invoke the browser, before test case execution necessary setup
+    yield
+    print(" I will be executed at last") # used to clean up the session, post running the test case
+
+def test_fixtureDemo(setup):
+    print("I will Executed steps in fixtureDemo Method")
+******************************************************************************************************************
+fixtures scope for class.
+when you define fixture scope to class only, it will run once before the class is intiated and at the end.
+import pytest
+
+@pytest.fixture(scope="class")
+def setup():
+    print("I will be executed first") # used to invoke the browser, before test case execution necessary setup
+    yield
+    print(" I will be executed at last") # used to clean up the session, post running the test case
+
+def test_fixtureDemo(setup):
+    print("I will Executed steps in fixtureDemo Method")
+*******************************************************************************************************
+import pytest
+@pytest.mark.usefixtures("setup")
+class TestExample:
+
+    def test_fixtureDemo(self):
+        print("I will Executed steps in fixtureDemo Method")
+
+    def test_fixtureDemo1(self):
+        print("I will Executed steps in fixtureDemo1 Method")
+
+    def test_fixtureDemo2(self):
+        print("I will Executed steps in fixtureDemo2 Method")
+
+    def test_fixtureDemo3(self):
+        print("I will Executed steps in fixtureDemo3 Method")
+*************************************************************************************************************************
+How parameterization can be achieved for tests with multiple sets of data
+Data driven and parameterization can be done with return statements in list format.
+In conftest file the code is as below:
+
+@pytest.fixture()
+def dataLoad():
+    print("User profile data is being created")
+    return["Karthik","Babu","karthikjohnbabu@gmail.com"]
+*************************************************************************************************************************
+test_fixtureData.py
+
+import pytest
+
+
+@pytest.mark.usefixtures("dataLoad")
+class TestExample2:
+
+    def test_editProfile(self,dataLoad):
+        print(dataLoad) # ['Karthik', 'Babu', 'karthikjohnbabu@gmail.com']
+        print(dataLoad[0])# Karthik
+        print(dataLoad[1])# Babu
+***********************************************************************************************************************
+conftest.py
+
+@pytest.fixture(params=["chrome","Firefox","IE"])
+def crossBrowser(request):
+    return request.param
+***********************************************************************************************************************
+test_Demo1.py
+
+def test_crossBrowser(crossBrowser):
+    print(crossBrowser) # Chrome, Firefox, IE.
+**********************************************************************************************************************
+@pytest.fixture(params=[("chrome","Rahul","Shetty"),("Firefox","shetty"),("IE","SS")])
+def crossBrowser(request):
+    return request.param
+
+def test_crossBrowser(crossBrowser):
+    print(crossBrowser[1])
+*********************************************************************************************************************
+HTML report generation for pytests Execution
+pip install pytest-html
+py.test --html=report.html

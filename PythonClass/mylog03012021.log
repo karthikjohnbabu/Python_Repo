@@ -1,0 +1,12 @@
+03/01/2021 08:07:23 PM:INFO:A new request came
+03/01/2021 08:08:36 PM:INFO:A new request came
+03/01/2021 08:09:41 PM:INFO:A new request came
+03/01/2021 08:09:50 PM:INFO:A new request came
+03/01/2021 08:09:54 PM:INFO:A new request came
+03/01/2021 08:10:34 PM:INFO:A new request came
+03/01/2021 08:10:38 PM:ERROR:division by zero
+Traceback (most recent call last):
+  File "C:/Users/karth/PycharmProjects/PythonClass/main.py", line 10, in <module>
+    print('The result:',x/y)
+ZeroDivisionError: division by zero
+03/01/2021 08:10:38 PM:INFO:request completed
