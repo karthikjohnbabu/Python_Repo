@@ -1,0 +1,149 @@
+Python Revision
+* In python we are not required to mention the type.
+* Python is Dynamically Typed Programming Language.
+* In python fundamental data types are as below:
+
+1. Integer
+2. Float
+3. String
+4. Complex
+5.Bool
+
+In python primitive data types are not available. In python everything is an
+object data type.
+
+All the fundamental data types are immutable in nature.
+To hold the group of objects we have collection data types.
+
+1. list is collection related data type. Where duplicates are allowed
+Insertion order is preserved, and it is mutable in nature.
+
+2. Tuple is collection related data type. same as List. But tuple is immutable
+in nature. Tuple is the read only version of list.
+
+3. Set is collection related data type. Duplicates are not allowed and order is
+not preserved.
+
+4. If I want to represent key value pair then we have to go for dictionary.
+
+String is sequence of characters. Supports both +ve and -ve index.
+String supports slicing.
+
+== operator always meant for content comparison
+is operator is for reference comparison.
+
+Membership operators
+in and not in operators
+
+input()==> return type is always int()
+eval()===> eval function
+
+sep attribute,
+print(10,20,30,40,50,sep='-')==>10-20-30
+
+end attribute
+print(10, end=' ')
+print(20, end=' ')
+10
+20
+
+if
+if-elif-else
+while
+for
+break
+continue
+pass
+
+l=[x for x in range(1,11) if x%2==0]
+
+if you find any object no longer required
+del x
+x=None
+
+l=[]
+l.append(x)
+l.remove(x)
+
+s=set()
+s.add(10)
+s.remove(10)
+
+dictionary
+d={}
+d[key]=value
+del d[key]
+d.get(key)
+
+Functions
+def f1():
+    stmt-1
+    stmt-1
+    stmt-1
+f1()
+
+Modules:
+A group of functions, variables, classes saved to a file is called as module.
+Biggest usability of Modules is code reusability.
+
+Package:
+A group of related modules into a single unit is called as package.
+
+__init__() --> Special method which is also know as constructor
+
+__init__.py ==> If we want to consider a folder as python package compulsory this file should be present.
+If folder contains __init__.py file then that folder is considered as python package.
+
+Exception Handling:
+Graceful termination of the program
+We should not miss anything.
+
+except ZeroDivisionError
+except ZeroDivisionError as msg:
+except (ZeroDivisionError, ValueError) as msg:
+except:
+
+finally:
+Resource deallocation code or cleanup code
+
+try:
+    Risky Code
+except:
+    Handling Code
+Finally:
+    clean up Code
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
